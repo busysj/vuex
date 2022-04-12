@@ -3,6 +3,14 @@
     <!-- $store.state.count를 통해서 바로 값을 들고 올 수 있다 -->
     <h1>카운터에서 가져온 값 {{ count }}</h1>
     <button @click="$store.commit('addcount')">추가</button>
+    <button @click="addcount">추가</button>
+    <button @click="addcountaction">추가(Action)</button>
+    <button @click="timer">1초 뒤 추가(Action)</button>
+    <button @click="ntimer({ count: 50, time: 10000 })">
+      10초 뒤 추가(Action)
+    </button>
+    <button @click="timersecond">1초마다 1증가</button>
+
     <button @click="$store.commit('dimcount')">감소</button>
 
     <ul>
@@ -14,7 +22,7 @@
     <!-- index.js name: ['홍길동', '성춘향','그린']을 추가하고 -->
     <!-- 아래에 computed를 이용하여 간략하게 만들어 출력 -->
     <ul>
-      <li v-for="(name, i) in $store.state.name" :key="i">
+      <li v-for="(name, i) in names" :key="i">
         {{ name }}
       </li>
     </ul>
@@ -22,7 +30,7 @@
     <p>{{ doneTodosCount }}</p>
     <p>{{ doneTodoCountGetter }}</p>
 
-    <HelloWorld />
+    <hello-world></hello-world>
   </div>
 </template>
 
@@ -39,7 +47,7 @@ export default {
     count() {
       return this.$store.state.count;
     },
-    output() {
+    names() {
       return this.$store.state.name;
     },
     doneTodosCount() {
@@ -48,6 +56,25 @@ export default {
     doneTodoCountGetter() {
       // store getters를 통해 계산된 내용을 컴포넌트마다 가져와서 사용
       return this.$store.getters.doneTodosCountGetter;
+    },
+  },
+  methods: {
+    // Mutation의 메소드는 commit을 통해 들고 온다
+    addcount() {
+      this.$store.commit("addcount");
+    },
+    // Action의 메소드는 dispatch를 통해 들고 온다
+    addcountaction() {
+      this.$store.dispatch("addcount");
+    },
+    timer() {
+      this.$store.dispatch("timer");
+    },
+    ntimer(time) {
+      this.$store.dispatch("ntimer", time);
+    },
+    timersecond() {
+      this.$store.dispatch("timersecond");
     },
   },
 };
