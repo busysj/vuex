@@ -1,5 +1,8 @@
 <template>
   <div id="app">
+    <!-- 모듈의 state값을 꺼내 올 때 : $store.state.모듈이름.값 -->
+    <h3>{{ $store.state.a.modulename }}</h3>
+
     <!-- $store.state.count를 통해서 바로 값을 들고 올 수 있다 -->
     <h1>카운터에서 가져온 값 {{ count }}</h1>
     <button @click="$store.commit('addcount')">추가</button>
@@ -76,6 +79,19 @@ export default {
     timersecond() {
       this.$store.dispatch("timersecond");
     },
+  },
+  created() {
+    console.log("app-created");
+  },
+  mounted() {
+    // 이벤트나 타이머 등의 비동기 함수를 사용할 때 사용
+    console.log("app-mounted");
+    this.timersecond();
+
+    window.alert("app-mounted");
+  },
+  updated() {
+    console.log("app-updated");
   },
 };
 </script>
